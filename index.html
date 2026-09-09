@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LIZDY & CO. SHOP - Catálogo Oficial</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    :root {
+      --bg-main: #0c0c0e;
+      --bg-sidebar: #141417;
+      --border-dark: #27272a;
+      --belcorp-purple: #7042b5;
+      --belcorp-purple-hover: #5d359a;
+      --belcorp-light-purple: #e9d5ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg-main); color: #fff; display: flex; flex-direction: column; height: 100vh; overflow: hidden; user-select: none; }
+
+    /* Barra Superior */
+    .top-header {
+      width: 100%; height: 54px; background: #09090b; display: flex; justify-content: space-between;
+      align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border-dark); z-index: 50; flex-shrink: 0;
+    }
+    .brand-logo-text {
+      font-size: 1.15rem; font-weight: 900; letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #ec4899, #f43f5e, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+    .header-right { display: flex; align-items: center; gap: 10px; position: relative; }
+
+    .icon-action-btn {
+      background: #27272a; border: 1px solid #3f3f46; color: #fff; width: 36px; height: 36px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; font-size: 0.9rem;
+    }
+    .icon-action-btn:hover { background: #3f3f46; }
+
+    /* Botón Mi Pedido */
+    .cart-btn-wrapper { position: relative; }
+    .cart-btn-header {
+      background: #22c55e; color: #fff; border: none; padding: 7px 14px;
+      border-radius: 20px; font-weight: 700; cursor: pointer; display: flex;
+      align-items: center; gap: 8px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+      transition: transform 0.15s, background 0.2s;
+    }
+    .cart-btn-header:hover { background: #16a34a; transform: scale(1.03); }
+    .cart-badge {
+      background: #fff; color: #16a34a; border-radius: 50%; width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800;
+    }
+
+    /* Hover Preview */
+    .cart-hover-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0; width: 280px;
+      background: #ffffff; color: #18181b; border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); padding: 12px;
+      display: none; flex-direction: column; gap: 8px; z-index: 99;
+      border: 1px solid #e4e4e7;
+    }
+    .cart-btn-wrapper:hover .cart-hover-dropdown { display: flex; }
+    .cart-hover-title { font-size: 0.8rem; font-weight: 800; color: #71717a; text-transform: uppercase; }
+    .cart-hover-list { max-height: 190px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .cart-hover-item { display: flex; gap: 8px; align-items: center; font-size: 0.8rem; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; }
+    .cart-hover-item img { width: 34px; height: 34px; object-fit: contain; }
+    .cart-hover-total { font-weight: 800; font-size: 0.88rem; display: flex; justify-content: space-between; margin-top: 4px; }
+
+    /* Área Central */
+    .main-workspace {
+      flex: 1; display: flex; width: 100%; height: calc(100vh - 54px - 46px); overflow: hidden; position: relative;
+    }
+
+    /* Barra Lateral Izquierda */
+    .brand-sidebar {
+      width: 96px; background: var(--bg-sidebar); border-right: 1px solid var(--border-dark);
+      display: flex; flex-direction: column; align-items: center; padding: 12px 6px;
+      gap: 16px; overflow-y: auto; z-index: 30; flex-shrink: 0;
+    }
+    .brand-sidebar::-webkit-scrollbar { width: 3px; }
+    .brand-sidebar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+
+    .sidebar-title {
+      font-size: 0.65rem; font-weight: 800; color: #71717a; text-transform: uppercase;
+      letter-spacing: 0.8px; text-align: center; margin-bottom: 2px;
+    }
+
+    .brand-cover-card {
+      width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      cursor: pointer; position: relative; transition: transform 0.2s ease;
+    }
+    .brand-cover-card:hover { transform: scale(1.03); }
+    
+    .cover-thumb-wrapper {
+      width: 72px; height: 100px; border-radius: 6px; overflow: hidden;
+      border: 2px solid #3f3f46; background: #1c1c1f; position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: all 0.2s;
+    }
+    .cover-thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .cover-label {
+      font-size: 0.72rem; font-weight: 800; color: #a1a1aa; text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-cover-card.active .cover-thumb-wrapper {
+      border-color: #ec4899;
+      box-shadow: 0 0 14px rgba(236, 72, 153, 0.65);
+    }
+    .brand-cover-card.active .cover-label { color: #fff; font-weight: 900; }
+
+    /* Escenario del Visor */
+    .book-stage {
+      flex: 1; height: 100%; position: relative; display: flex;
+      justify-content: center; align-items: center; overflow: hidden;
+      background: #101013; padding: 8px;
+    }
+
+    .page-stage-box {
+      position: relative; max-width: 920px; width: 100%; height: 98%; max-height: 88vh;
+      display: flex; justify-content: center; align-items: center;
+      transition: transform 0.26s ease-out, opacity 0.26s ease-out;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+    }
+
+    .page-stage-box.slide-left { transform: translateX(-50px); opacity: 0; }
+    .page-stage-box.slide-right { transform: translateX(50px); opacity: 0; }
+
+    .page-sheet {
+      width: 100%; height: 100%; position: relative; background: #000;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; overflow: visible;
+    }
+    .page-sheet img {
+      width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;
+      border-radius: 6px;
+    }
+
+    #hotspotContainer {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 25;
+    }
+
+    .page-stage-box.double-view .page-sheet::after {
+      content: ''; position: absolute; top: 0; left: 50%; width: 16px; height: 100%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.02) 55%, rgba(0,0,0,0.25) 100%);
+      pointer-events: none; z-index: 15;
+    }
+
+    .flip-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+      background: rgba(24, 24, 27, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+      color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer;
+      z-index: 35; transition: all 0.2s; backdrop-filter: blur(4px);
+    }
+    .flip-arrow:hover:not(:disabled) { background: #27272a; transform: translateY(-50%) scale(1.1); }
+    .flip-arrow:disabled { opacity: 0.15; cursor: not-allowed; }
+    .flip-arrow.left { left: 14px; }
+    .flip-arrow.right { right: 14px; }
+
+    /* Botón "Pedir" */
+    .belcorp-hotspot {
+      position: absolute; transform: translate(-50%, -50%); display: inline-flex;
+      align-items: center; gap: 6px; background: rgba(24, 24, 27, 0.94);
+      backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff;
+      padding: 5px 12px 5px 8px; border-radius: 20px; border: 1.5px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55); cursor: pointer; z-index: 30;
+      transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s;
+      animation: hotspotFloat 2.6s ease-in-out infinite;
+      white-space: nowrap; pointer-events: auto;
+    }
+    .belcorp-hotspot:hover {
+      background: #000000; transform: translate(-50%, -50%) scale(1.1);
+      border-color: #ec4899; box-shadow: 0 0 16px rgba(236, 72, 153, 0.6);
+    }
+    .belcorp-icon-circle {
+      width: 20px; height: 20px; border-radius: 50%; background: rgba(255, 255, 255, 0.18);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .belcorp-icon-circle svg { width: 12px; height: 12px; fill: #ffffff; }
+    .belcorp-text { font-size: 0.8rem; font-weight: 700; line-height: 1; letter-spacing: 0.3px; }
+
+    @keyframes hotspotFloat {
+      0%, 100% { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55); }
+      50% { box-shadow: 0 4px 18px rgba(255, 255, 255, 0.45); }
+    }
+
+    /* Barra Inferior */
+    .bottom-bar {
+      width: 100%; height: 46px; background: #09090b; border-top: 1px solid var(--border-dark);
+      display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 40; flex-shrink: 0;
+    }
+    .page-counter-box {
+      font-size: 0.88rem; font-weight: 700; color: #d4d4d8; display: flex; align-items: center; gap: 8px;
+    }
+    .brand-current-tag {
+      font-size: 0.75rem; text-transform: uppercase; background: #27272a; padding: 2px 8px;
+      border-radius: 4px; color: #f43f5e; font-weight: 800;
+    }
+    .bottom-nav-controls { display: flex; align-items: center; gap: 10px; }
+    .mini-nav-btn {
+      background: #27272a; border: 1px solid #3f3f46; color: #fff; padding: 5px 12px;
+      border-radius: 6px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    }
+    .mini-nav-btn:hover:not(:disabled) { background: #3f3f46; }
+    .mini-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+    /* ========================================================
+       MODAL 1: FLOTANTE RÁPIDO
+       ======================================================== */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 100;
+      padding: 14px; backdrop-filter: blur(2px);
+    }
+    .modal-card {
+      background: #ffffff; color: #18181b; width: 100%; max-width: 320px; border-radius: 20px;
+      padding: 20px 18px; text-align: left; position: relative; max-height: 92vh; overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5); animation: popModal 0.2s ease-out;
+    }
+    @keyframes popModal { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; background: none; border: none;
+      font-size: 1.3rem; cursor: pointer; color: #000; font-weight: bold;
+    }
+
+    .modal-product-img-box {
+      width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; margin-bottom: 10px;
+    }
+    .modal-product-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
+
+    .modal-catalog-tag { font-size: 0.8rem; color: #71717a; margin-bottom: 4px; }
+    .modal-product-title { font-size: 1rem; font-weight: 800; color: #000; text-transform: uppercase; margin-bottom: 8px; line-height: 1.25; }
+    
+    .modal-price-row { font-size: 0.82rem; color: #52525b; margin-bottom: 4px; }
+    .modal-price-normal { text-decoration: line-through; }
+    .modal-offer-tag { font-size: 0.75rem; color: #52525b; font-weight: 600; margin-top: 6px; }
+    .modal-price-offer { font-size: 1.35rem; font-weight: 900; color: #000; margin-bottom: 14px; }
+
+    /* Carrusel de Tonos con CUV visible */
+    .tones-carousel-wrap {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 18px; position: relative;
+    }
+    .tones-arrow-btn {
+      width: 26px; height: 26px; border-radius: 50%; background: #52525b; color: #fff;
+      border: none; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .tones-carousel-track {
+      display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding: 4px 2px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .tones-carousel-track::-webkit-scrollbar { display: none; }
+
+    .tone-swatch-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex-shrink: 0;
+      width: 64px; text-align: center;
+    }
+    .tone-swatch-name {
+      font-size: 0.62rem; font-weight: 700; color: #52525b; text-transform: uppercase;
+      line-height: 1.1; height: 20px; display: flex; align-items: center; justify-content: center;
+    }
+    .tone-swatch-code {
+      font-size: 0.65rem; color: #71717a; font-weight: 800; background: #f4f4f5; padding: 1px 4px; border-radius: 3px;
+    }
+    .tone-swatch-color {
+      width: 44px; height: 44px; border-radius: 4px; border: 1px solid transparent;
+      background-size: cover; background-position: center;
+    }
+    .tone-swatch-item.selected .tone-swatch-color {
+      border: 2px dashed #000; transform: scale(1.05);
+    }
+
+    .btn-action-purple {
+      background: var(--belcorp-purple); color: #fff; border: none; width: 100%; padding: 12px;
+      border-radius: 12px; font-weight: 700; font-size: 0.92rem; cursor: pointer; margin-bottom: 8px;
+      text-align: center; transition: background 0.2s;
+    }
+    .btn-action-purple:hover { background: var(--belcorp-purple-hover); }
+
+    .btn-action-outline {
+      background: #fff; color: var(--belcorp-purple); border: 1.5px solid var(--belcorp-purple);
+      width: 100%; padding: 11px; border-radius: 12px; font-weight: 700; font-size: 0.92rem;
+      cursor: pointer; text-align: center; transition: background 0.2s;
+    }
+    .btn-action-outline:hover { background: #f5f3ff; }
+
+    /* ========================================================
+       MODAL 2: ¡AGREGADO CON ÉXITO!
+       ======================================================== */
+    .success-modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.65); display: none; justify-content: center; align-items: center;
+      z-index: 300; padding: 16px; backdrop-filter: blur(2px);
+    }
+    .success-card {
+      background: #ffffff; color: #18181b; width: 100%; max-width: 380px; border-radius: 18px;
+      padding: 22px; position: relative; box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+      animation: popModal 0.2s ease-out;
+    }
+    .success-header-row {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+    }
+    .success-title-box {
+      display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 800; color: #09090b;
+    }
+    .success-icon-check {
+      width: 26px; height: 26px; border-radius: 50%; background: #16a34a; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .success-item-row {
+      display: flex; gap: 14px; align-items: center; margin-bottom: 22px;
+    }
+    .success-item-img { width: 50px; height: 50px; object-fit: contain; }
+    .success-item-details { flex: 1; }
+    .success-prod-name { font-size: 0.9rem; font-weight: 700; color: #09090b; }
+    .success-prod-tone { font-size: 0.8rem; color: #71717a; margin-top: 2px; }
+    .success-prod-price { font-size: 0.95rem; font-weight: 800; color: #09090b; text-align: right; }
+
+    .success-actions-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .btn-link-explore {
+      background: none; border: none; color: var(--belcorp-purple); font-weight: 700;
+      font-size: 0.88rem; cursor: pointer; text-decoration: underline; padding: 6px;
+    }
+    .btn-review-order {
+      background: var(--belcorp-light-purple); color: var(--belcorp-purple); border: none;
+      padding: 10px 16px; border-radius: 12px; font-weight: 800; font-size: 0.88rem;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-review-order:hover { background: #ddd6fe; }
+
+    /* ========================================================
+       PANTALLA DE DETALLE COMPLETA
+       ======================================================== */
+    .detail-view-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #ffffff; color: #18181b; z-index: 200; display: none;
+      flex-direction: column; overflow-y: auto;
+    }
+    .detail-top-nav {
+      height: 54px; border-bottom: 1px solid #e4e4e7; display: flex;
+      justify-content: space-between; align-items: center; padding: 0 16px;
+      position: sticky; top: 0; background: #fff; z-index: 10;
+    }
+    .detail-back-btn {
+      display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700;
+      color: #000; cursor: pointer; background: none; border: none;
+    }
+
+    .detail-body-container {
+      max-width: 960px; width: 100%; margin: 0 auto; padding: 24px 16px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .detail-main-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 768px) {
+      .detail-main-grid { grid-template-columns: 1.1fr 1fr; gap: 40px; }
+    }
+
+    .detail-gallery-box { display: flex; gap: 14px; align-items: flex-start; }
+    .detail-thumb-list { display: flex; flex-direction: column; gap: 8px; width: 60px; }
+    .detail-thumb-mini {
+      width: 54px; height: 68px; border: 1.5px solid #a855f7; border-radius: 4px;
+      overflow: hidden; cursor: pointer; padding: 2px;
+    }
+    .detail-thumb-mini img { width: 100%; height: 100%; object-fit: contain; }
+    .detail-big-img-box {
+      flex: 1; height: 360px; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .detail-big-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
+    
+    /* Insignia Roja 1x 2x */
+    .promo-badge-tag {
+      position: absolute; top: 10px; right: 10px; background: #dc2626; color: #fff;
+      font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 14px;
+      display: none;
+    }
+
+    .detail-info-col h1 { font-size: 1.3rem; font-weight: 800; color: #09090b; text-transform: uppercase; margin-bottom: 4px; }
+    .detail-code { font-size: 0.85rem; color: #52525b; margin-bottom: 4px; }
+    .detail-subdesc { font-size: 0.88rem; color: #3f3f46; margin-bottom: 12px; }
+    
+    .detail-pricing-box { margin-bottom: 14px; }
+    .detail-normal-price-row { font-size: 0.85rem; color: #71717a; margin-bottom: 2px; }
+    .detail-normal-price-row span { text-decoration: line-through; }
+    .detail-p1 { font-size: 1.15rem; font-weight: 900; color: #09090b; }
+    .detail-p2 { font-size: 1.15rem; font-weight: 900; color: #db2777; margin-top: 3px; display: none; }
+
+    .detail-variant-title { font-size: 0.82rem; color: #52525b; margin-bottom: 4px; }
+    .detail-current-tone-name { font-size: 0.9rem; font-weight: 800; color: #000; text-transform: uppercase; margin-bottom: 10px; }
+
+    .detail-swatches-grid {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; max-height: 220px; overflow-y: auto; padding: 4px;
+    }
+    .detail-grid-swatch {
+      width: 38px; height: 38px; border-radius: 4px; border: 1.5px solid #e4e4e7;
+      cursor: pointer; background-size: cover; background-position: center; transition: all 0.15s;
+      position: relative;
+    }
+    .detail-grid-swatch.selected { border-color: #000; outline: 2px solid #000; transform: scale(1.08); }
+
+    .detail-purchase-row {
+      display: flex; gap: 12px; align-items: center; margin-bottom: 24px;
+    }
+    .detail-qty-control {
+      display: inline-flex; align-items: center; border: 1px solid #d4d4d8;
+      border-radius: 8px; height: 44px; padding: 0 8px;
+    }
+    .detail-qty-btn {
+      background: none; border: none; font-size: 1.1rem; font-weight: bold;
+      width: 30px; height: 100%; cursor: pointer; color: #18181b;
+    }
+    .detail-qty-num { font-size: 1rem; font-weight: 800; min-width: 26px; text-align: center; }
+
+    .accordion-section { border-top: 1px solid #e4e4e7; }
+    .accordion-header {
+      padding: 16px 0; font-size: 0.95rem; font-weight: 700; color: #09090b;
+      display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+    }
+    .accordion-body {
+      font-size: 0.85rem; color: #52525b; line-height: 1.5; padding-bottom: 14px; display: none;
+    }
+    .accordion-section.open .accordion-body { display: block; }
+    .accordion-section.open .accordion-header i { transform: rotate(180deg); }
+
+    /* ========================================================
+       PANTALLA COMPLETA 3: "MI PEDIDO" (CON BADGE 1x2x APLICADO)
+       ======================================================== */
+    .order-view-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #f8fafc; color: #18181b; z-index: 210; display: none;
+      flex-direction: column; overflow-y: auto;
+    }
+    .order-top-nav {
+      height: 56px; background: #fff; border-bottom: 1px solid #e2e8f0; display: flex;
+      justify-content: space-between; align-items: center; padding: 0 24px; position: sticky; top: 0; z-index: 10;
+    }
+    .order-back-btn {
+      display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 800;
+      color: #0f172a; cursor: pointer; background: none; border: none;
+    }
+
+    .order-main-container {
+      max-width: 1180px; width: 100%; margin: 24px auto; padding: 0 16px;
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    @media(min-width: 860px) {
+      .order-main-container { grid-template-columns: 1.6fr 1fr; }
+    }
+
+    .order-card-box {
+      background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .order-card-title {
+      font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 20px;
+    }
+
+    .order-items-list { display: flex; flex-direction: column; gap: 18px; }
+    .order-prod-row {
+      display: flex; align-items: center; gap: 16px; padding-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .order-prod-img { width: 60px; height: 60px; object-fit: contain; flex-shrink: 0; }
+    .order-prod-info { flex: 1; }
+    .order-prod-name { font-size: 0.92rem; font-weight: 700; color: #0f172a; }
+    .order-prod-meta {
+      display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #64748b; margin-top: 4px;
+    }
+    .order-meta-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+    /* Insignia 1x2x aplicado idéntica a tu captura */
+    .order-promo-applied-badge {
+      display: inline-block; border: 1px solid #f87171; color: #ef4444; font-size: 0.68rem;
+      font-weight: 800; padding: 1px 8px; border-radius: 10px; margin-top: 4px;
+    }
+
+    .order-qty-control {
+      display: inline-flex; align-items: center; border: 1px solid #cbd5e1;
+      border-radius: 6px; height: 32px; padding: 0 4px;
+    }
+    .order-qty-btn {
+      background: none; border: none; width: 24px; height: 100%; font-size: 1rem;
+      cursor: pointer; color: #334155; font-weight: bold;
+    }
+    .order-qty-val { font-size: 0.88rem; font-weight: 800; min-width: 20px; text-align: center; }
+    .order-trash-btn {
+      background: none; border: none; color: #0f172a; font-size: 1rem; cursor: pointer; padding: 4px 8px;
+    }
+
+    .order-prod-pricing { text-align: right; min-width: 90px; }
+    .order-p-normal { font-size: 0.8rem; color: #94a3b8; text-decoration: line-through; display: block; }
+    .order-p-offer { font-size: 0.95rem; color: #7042b5; font-weight: 800; }
+
+    .order-sidebar-col { display: flex; flex-direction: column; gap: 20px; }
+    .summary-box { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 22px; }
+    .summary-title { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 14px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #475569; margin-bottom: 10px; }
+    .summary-row.total-row {
+      font-size: 1.05rem; font-weight: 800; color: #7042b5; border-top: 1px solid #f1f5f9;
+      padding-top: 12px; margin-top: 6px; margin-bottom: 0;
+    }
+
+    .customer-box { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 22px; }
+    .customer-title { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .customer-sub { font-size: 0.8rem; color: #64748b; margin-bottom: 14px; line-height: 1.3; }
+
+    .input-field-wrap { margin-bottom: 12px; }
+    .customer-input {
+      width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 14px;
+      font-size: 0.88rem; outline: none; transition: border-color 0.2s;
+    }
+    .customer-input:focus { border-color: #7042b5; }
+
+    .terms-row {
+      display: flex; align-items: flex-start; gap: 8px; font-size: 0.72rem; color: #64748b; margin-bottom: 16px;
+    }
+    .terms-row a { color: #0f172a; text-decoration: underline; font-weight: 700; }
+
+    .btn-send-whatsapp {
+      background: #52525b; color: #fff; border: none; width: 100%; padding: 12px;
+      border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-send-whatsapp.active {
+      background: #25d366; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    }
+    .btn-send-whatsapp.active:hover { background: #20ba5a; }
+
+    /* Modal de Búsqueda */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: flex-start;
+      z-index: 220; padding-top: 60px;
+    }
+    .search-card {
+      background: #18181b; width: 92%; max-width: 450px; border-radius: 12px;
+      padding: 16px; border: 1px solid #27272a; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .search-input-box { display: flex; gap: 8px; margin-bottom: 12px; }
+    .search-input {
+      flex: 1; background: #27272a; border: 1px solid #3f3f46; color: #fff;
+      padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; outline: none;
+    }
+    .search-results { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .search-res-item {
+      padding: 8px 10px; background: #27272a; border-radius: 6px; display: flex;
+      justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.85rem;
+    }
+    .search-res-item:hover { background: #3f3f46; }
+  </style>
+</head>
+<body>
+
+  <!-- Barra Superior -->
+  <div class="top-header">
+    <div class="brand-logo-text">LIZDY & CO. SHOP</div>
+    <div class="header-right">
+      <button class="icon-action-btn" onclick="abrirBuscador()" title="Buscar producto o CUV">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button class="icon-action-btn" onclick="alternarPantallaCompleta()" title="Pantalla completa">
+        <i class="fa-solid fa-expand"></i>
+      </button>
+
+      <div class="cart-btn-wrapper">
+        <button class="cart-btn-header" onclick="abrirPantallaPedido()">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span>Mi Pedido</span>
+          <span class="cart-badge" id="cartCount">0</span>
+        </button>
+
+        <div class="cart-hover-dropdown">
+          <div class="cart-hover-title">Productos en tu pedido</div>
+          <div class="cart-hover-list" id="cartHoverList">
+            <div style="font-size: 0.8rem; color:#71717a;">Tu bolsa está vacía.</div>
+          </div>
+          <div class="cart-hover-total">
+            <span>Total:</span>
+            <span id="cartHoverTotal">S/ 0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zona Principal: Portadas a la Izquierda + Visor al Centro -->
+  <div class="main-workspace">
+    
+    <div class="brand-sidebar">
+      <div class="sidebar-title">Marcas</div>
+
+      <div class="brand-cover-card active" id="card-cyzone" onclick="cambiarMarca('cyzone')">
+        <div class="cover-thumb-wrapper"><img id="coverImg-cyzone" src="" alt="Cyzone" /></div>
+        <span class="cover-label">Cyzone</span>
+      </div>
+
+      <div class="brand-cover-card" id="card-esika" onclick="cambiarMarca('esika')">
+        <div class="cover-thumb-wrapper"><img id="coverImg-esika" src="" alt="Ésika" /></div>
+        <span class="cover-label">Ésika</span>
+      </div>
+
+      <div class="brand-cover-card" id="card-lbel" onclick="cambiarMarca('lbel')">
+        <div class="cover-thumb-wrapper"><img id="coverImg-lbel" src="" alt="L'Bel" /></div>
+        <span class="cover-label">L'Bel</span>
+      </div>
+    </div>
+
+    <div class="book-stage" id="bookStage">
+      <button class="flip-arrow left" id="btnPrev" onclick="cambiarPagina(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="page-stage-box" id="pageStageBox">
+        <div class="page-sheet">
+          <img id="pageImg" src="" alt="Página de catálogo" />
+          <div id="hotspotContainer"></div>
+        </div>
+      </div>
+
+      <button class="flip-arrow right" id="btnNext" onclick="cambiarPagina(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+  </div>
+
+  <!-- Barra Inferior Limpia -->
+  <div class="bottom-bar">
+    <div class="page-counter-box">
+      <span class="brand-current-tag" id="brandCurrentTag">CYZONE</span>
+      <span id="pageIndicator">Cargando...</span>
+    </div>
+
+    <div class="bottom-nav-controls">
+      <button class="mini-nav-btn" id="btnPrevBottom" onclick="cambiarPagina(-1)">◀ Anterior</button>
+      <button class="mini-nav-btn" id="btnNextBottom" onclick="cambiarPagina(1)">Siguiente ▶</button>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 1: FLOTANTE RÁPIDO
+       ======================================================== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+    <div class="modal-card">
+      <button class="modal-close" onclick="cerrarModalDirecto()">✕</button>
+
+      <div class="modal-product-img-box">
+        <img id="mImg" src="" alt="Producto" />
+      </div>
+
+      <div class="modal-catalog-tag">Catálogo</div>
+      <div class="modal-product-title" id="mName">COLORFIX LABIAL 24H.</div>
+
+      <div class="modal-price-row" id="mPriceNormalRow">
+        Precio normal: <span class="modal-price-normal" id="mPriceNormal">S/ 52.00</span>
+      </div>
+      <div class="modal-offer-tag" id="mOfferLabel">Precio oferta</div>
+      <div class="modal-price-offer" id="mPriceOffer">S/ 31.90</div>
+
+      <div id="mVariantsSection" style="display: none;">
+        <div class="tones-carousel-wrap">
+          <button class="tones-arrow-btn" onclick="desplazarCarruselTonos(-1)">‹</button>
+          <div class="tones-carousel-track" id="tonesTrack"></div>
+          <button class="tones-arrow-btn" onclick="desplazarCarruselTonos(1)">›</button>
+        </div>
+      </div>
+
+      <button class="btn-action-purple" onclick="agregarAlCarritoDesdeModal()">Lo quiero en mi pedido</button>
+      <button class="btn-action-outline" onclick="abrirPantallaDetalle()">Ver detalle</button>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 2: ¡AGREGADO CON ÉXITO!
+       ======================================================== -->
+  <div class="success-modal-overlay" id="successModalOverlay">
+    <div class="success-card">
+      <div class="success-header-row">
+        <div class="success-title-box">
+          <div class="success-icon-check"><i class="fa-solid fa-check"></i></div>
+          <span>¡Agregado con éxito!</span>
+        </div>
+        <button class="modal-close" style="position: static;" onclick="cerrarModalExito()">✕</button>
+      </div>
+
+      <div class="success-item-row">
+        <img id="sImg" class="success-item-img" src="" />
+        <div class="success-item-details">
+          <div class="success-prod-name" id="sName">Colorfix Labial 24h.</div>
+          <div class="success-prod-tone" id="sTone">Tono Rojo Latino</div>
+        </div>
+        <div class="success-prod-price" id="sPrice">S/ 31.90</div>
+      </div>
+
+      <div class="success-actions-row">
+        <button class="btn-link-explore" onclick="cerrarModalExito()">Seguir explorando</button>
+        <button class="btn-review-order" onclick="revisarPedidoDesdeExito()">Revisar mi pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       PANTALLA DE DETALLE COMPLETA
+       ======================================================== -->
+  <div class="detail-view-screen" id="detailScreen">
+    <div class="detail-top-nav">
+      <button class="detail-back-btn" onclick="cerrarPantallaDetalle()">
+        <i class="fa-solid fa-arrow-left"></i> Volver al catálogo
+      </button>
+      <button class="cart-btn-header" onclick="abrirPantallaPedido()">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-badge" id="cartCountDetail">0</span>
+      </button>
+    </div>
+
+    <div class="detail-body-container">
+      <div class="detail-main-grid">
+        <div class="detail-gallery-box">
+          <div class="detail-thumb-list">
+            <div class="detail-thumb-mini"><img id="dThumbImg" src="" /></div>
+          </div>
+          <div class="detail-big-img-box">
+            <span class="promo-badge-tag" id="dPromoBadge">1x 2x</span>
+            <img id="dBigImg" src="" alt="Detalle producto" />
+          </div>
+        </div>
+
+        <div class="detail-info-col">
+          <h1 id="dTitle">COLORFIX LABIAL 24H.</h1>
+          <div class="detail-code">Código: <span id="dCuv">14727</span></div>
+          <div class="detail-subdesc" id="dSubdesc">Labial mate 24H a prueba de todo.</div>
+
+          <div class="detail-pricing-box">
+            <div class="detail-normal-price-row" id="dPriceNormalRow">
+              Precio normal: <span id="dPriceNormal">S/ 52.00</span>
+            </div>
+            <div class="detail-p1" id="dPrice1">1X S/ 31.90</div>
+            <div class="detail-p2" id="dPrice2">2X S/ 45.90</div>
+          </div>
+
+          <div id="dGridVariantsBox" style="display: none;">
+            <div class="detail-variant-title">Elige tu variante favorita:</div>
+            <div class="detail-current-tone-name" id="dCurrentToneName">ROJO LATINO</div>
+            
+            <div class="detail-swatches-grid" id="dSwatchesGrid"></div>
+          </div>
+
+          <div class="detail-purchase-row">
+            <div class="detail-qty-control">
+              <button class="detail-qty-btn" onclick="ajustarCantidadDetalle(-1)">-</button>
+              <span class="detail-qty-num" id="dQty">1</span>
+              <button class="detail-qty-btn" onclick="ajustarCantidadDetalle(1)">+</button>
+            </div>
+            <button class="btn-action-purple" style="margin-bottom: 0; flex: 1; height: 44px;" onclick="agregarAlCarritoDesdeDetalle()">
+              Lo quiero en mi pedido
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-section open" onclick="alternarAcordeon(this)">
+        <div class="accordion-header">
+          <span>Descripción</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body" id="dFullDesc">
+          Fórmula exclusiva con acabado duradero y alta fijación.
+        </div>
+      </div>
+
+      <div class="accordion-section" onclick="alternarAcordeon(this)">
+        <div class="accordion-header">
+          <span>Razones para amarlo</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          Textura ligera de máxima duración, resistente y con tonos de impacto.
+        </div>
+      </div>
+
+      <div class="accordion-section" onclick="alternarAcordeon(this)">
+        <div class="accordion-header">
+          <span>¿Cómo usarlo?</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="accordion-body">
+          Aplica suavemente sobre la piel limpia para obtener un color homogéneo.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       PANTALLA COMPLETA 3: "MI PEDIDO"
+       ======================================================== -->
+  <div class="order-view-screen" id="orderScreen">
+    <div class="order-top-nav">
+      <button class="order-back-btn" onclick="cerrarPantallaPedido()">
+        <i class="fa-solid fa-arrow-left"></i> Mi Pedido
+      </button>
+      <div style="font-size:0.85rem; color:#64748b; font-weight:700;">LIZDY & CO. SHOP</div>
+    </div>
+
+    <div class="order-main-container">
+      <div class="order-card-box">
+        <div class="order-card-title" id="orderCardTitle">Tus productos (0)</div>
+        <div class="order-items-list" id="orderItemsList">
+          <div style="color:#64748b; font-size:0.9rem;">No tienes productos agregados a tu pedido.</div>
+        </div>
+      </div>
+
+      <div class="order-sidebar-col">
+        <div class="summary-box">
+          <div class="summary-title">Resumen</div>
+          <div class="summary-row">
+            <span>Resumen</span>
+            <span id="sumRegular">S/ 0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Desct. sobre precio regular</span>
+            <span id="sumDiscount" style="color:#ef4444;">- S/ 0.00</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Monto total</span>
+            <span id="sumTotal">S/ 0.00</span>
+          </div>
+        </div>
+
+        <div class="customer-box">
+          <div class="customer-title">Datos de cliente</div>
+          <div class="customer-sub">Comparte tus datos para coordinar la entrega y el pago por WhatsApp.</div>
+
+          <div class="input-field-wrap">
+            <input type="email" id="custEmail" class="customer-input" placeholder="Correo electrónico *" oninput="validarFormulario()" />
+          </div>
+          <div class="input-field-wrap">
+            <input type="text" id="custName" class="customer-input" placeholder="Nombre *" oninput="validarFormulario()" />
+          </div>
+          <div class="input-field-wrap">
+            <input type="text" id="custLastName" class="customer-input" placeholder="Apellido *" oninput="validarFormulario()" />
+          </div>
+
+          <div class="terms-row">
+            <input type="checkbox" id="custTerms" onchange="validarFormulario()" style="margin-top:2px;" checked />
+            <label for="custTerms">Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a>.</label>
+          </div>
+
+          <button class="btn-send-whatsapp" id="btnSendWs" onclick="enviarPedidoFinalWhatsApp()">
+            <i class="fa-brands fa-whatsapp"></i> Enviar pedido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Búsqueda -->
+  <div class="search-overlay" id="searchOverlay" onclick="cerrarBuscador(event)">
+    <div class="search-card">
+      <div class="search-input-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre o CUV..." oninput="ejecutarBusqueda()" />
+        <button class="icon-action-btn" onclick="cerrarBuscadorDirecto()">✕</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <script>
+    const CATALOGOS = {
+      cyzone: 'cyzone_paginas.json',
+      esika: 'esika_paginas.json',
+      lbel: 'lbel_paginas.json'
+    };
+
+    let pagesData = [];
+    let dbProductos = []; 
+    let currentIndex = 0;
+    let marcaActual = 'cyzone';
+    let productoActual = null;
+    let tonosDelProducto = [];
+    let tonoActual = null;
+    let cantidadDetalle = 1;
+    let carrito = [];
+
+    fetch('catalogo_belcorp_completo.json')
+      .then(res => res.json())
+      .then(data => { dbProductos = data; })
+      .catch(err => console.log("Aún no se carga catalogo_belcorp_completo.json", err));
+
+    function precargarPortadas() {
+      Object.keys(CATALOGOS).forEach(marca => {
+        fetch(CATALOGOS[marca])
+          .then(res => res.json())
+          .then(data => {
+            const raw = Array.isArray(data) ? data[0] : data;
+            const pages = raw?.data?.catalog?.pages || [];
+            if (pages.length > 0) {
+              const urlPortada = pages[0].images?.single || pages[0].images?.main || pages[0].images?.double || '';
+              const el = document.getElementById(`coverImg-${marca}`);
+              if (el && urlPortada) el.src = urlPortada;
+            }
+          })
+          .catch(e => console.log(`Error precargando portada de ${marca}:`, e));
+      });
+    }
+
+    function cambiarMarca(marca) {
+      marcaActual = marca;
+      document.querySelectorAll('.brand-cover-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById(`card-${marca}`);
+      if (activeCard) activeCard.classList.add('active');
+
+      document.getElementById('brandCurrentTag').innerText = marca.toUpperCase();
+      cargarCatalogo(CATALOGOS[marca]);
+    }
+
+    function cargarCatalogo(archivoJson) {
+      document.getElementById('pageIndicator').innerText = "Cargando...";
+      fetch(archivoJson)
+        .then(res => res.json())
+        .then(data => {
+          const raw = Array.isArray(data) ? data[0] : data;
+          pagesData = raw?.data?.catalog?.pages || [];
+          if (pagesData.length > 0) {
+            renderPage(0, 0);
+          } else {
+            document.getElementById('pageIndicator').innerText = "Catálogo vacío";
+          }
+        })
+        .catch(err => {
+          console.error("Error al cargar JSON:", err);
+          document.getElementById('pageIndicator').innerText = `Error cargando catálogo`;
+        });
+    }
+
+    function crearBotonHotspot(prod, xPercent, yPercent) {
+      const btn = document.createElement('div');
+      btn.className = 'belcorp-hotspot';
+      btn.style.left = `${xPercent}%`;
+      btn.style.top = `${yPercent}%`;
+      
+      btn.innerHTML = `
+        <div class="belcorp-icon-circle">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74c1.21-.81 2-2.18 2-3.74a4.5 4.5 0 0 0-9 0c0 1.56.79 2.93 2 3.74zm9.84 4.63-4.54-2.26a1.76 1.76 0 0 0-.79-.19h-.51V7.5a1.5 1.5 0 0 0-3 0v7.19l-2.71-.57a1.44 1.44 0 0 0-1.4.37 1.47 1.47 0 0 0-.43 1.04c0 .38.15.75.43 1.03l4.31 4.3c.6.6 1.41.94 2.26.94h4.74c1.45 0 2.68-1.03 2.93-2.46l.66-3.75c.16-.91-.25-1.83-.95-2.22z"/>
+          </svg>
+        </div>
+        <span class="belcorp-text">Pedir</span>
+      `;
+
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        abrirModal(prod);
+      };
+      return btn;
+    }
+
+    function renderPage(index, delta = 0) {
+      if (index < 0) index = 0;
+      if (index >= pagesData.length) index = pagesData.length - 1;
+
+      const vistaDoble = window.innerWidth >= 768;
+      if (vistaDoble && index > 0 && index % 2 === 0) {
+        index = index - 1;
+      }
+      currentIndex = index;
+
+      const stageBox = document.getElementById('pageStageBox');
+      const page = pagesData[currentIndex];
+      const imgElem = document.getElementById('pageImg');
+      const container = document.getElementById('hotspotContainer');
+
+      if (delta !== 0) {
+        stageBox.classList.add(delta > 0 ? 'slide-left' : 'slide-right');
+      }
+
+      setTimeout(() => {
+        container.innerHTML = '';
+
+        if (vistaDoble && currentIndex > 0) {
+          stageBox.classList.add('double-view');
+          imgElem.src = page.images?.double || page.images?.single || '';
+
+          (page.products || []).forEach(prod => {
+            if (prod.position_x !== undefined && prod.position_y !== undefined) {
+              let posX = prod.position_x / 2;
+              posX = Math.max(4, Math.min(posX, 46));
+              let posY = Math.max(5, Math.min(prod.position_y, 94));
+              container.appendChild(crearBotonHotspot(prod, posX, posY));
+            }
+          });
+
+          const nextPage = pagesData[currentIndex + 1];
+          if (nextPage) {
+            (nextPage.products || []).forEach(prod => {
+              if (prod.position_x !== undefined && prod.position_y !== undefined) {
+                let posX = 50 + (prod.position_x / 2);
+                posX = Math.max(54, Math.min(posX, 96));
+                let posY = Math.max(5, Math.min(prod.position_y, 94));
+                container.appendChild(crearBotonHotspot(prod, posX, posY));
+              }
+            });
+            document.getElementById('pageIndicator').innerText = `Págs. ${page.order}-${nextPage.order} de ${pagesData.length}`;
+          } else {
+            document.getElementById('pageIndicator').innerText = `Pág. ${page.order} de ${pagesData.length}`;
+          }
+
+        } else {
+          stageBox.classList.remove('double-view');
+          imgElem.src = page.images?.single || page.images?.main || page.images?.double || '';
+
+          (page.products || []).forEach(prod => {
+            if (prod.position_x !== undefined && prod.position_y !== undefined) {
+              let posX = Math.max(6, Math.min(prod.position_x, 94));
+              let posY = Math.max(5, Math.min(prod.position_y, 94));
+              container.appendChild(crearBotonHotspot(prod, posX, posY));
+            }
+          });
+
+          document.getElementById('pageIndicator').innerText = `Pág. ${page.order} de ${pagesData.length}`;
+        }
+
+        const disablePrev = (currentIndex === 0);
+        const disableNext = (currentIndex >= pagesData.length - 1);
+        
+        document.getElementById('btnPrev').disabled = disablePrev;
+        document.getElementById('btnNext').disabled = disableNext;
+        document.getElementById('btnPrevBottom').disabled = disablePrev;
+        document.getElementById('btnNextBottom').disabled = disableNext;
+
+        stageBox.classList.remove('slide-left', 'slide-right');
+      }, delta === 0 ? 0 : 130);
+    }
+
+    function cambiarPagina(direction) {
+      const vistaDoble = window.innerWidth >= 768;
+      let paso = (vistaDoble && currentIndex > 0) ? 2 : 1;
+      renderPage(currentIndex + (direction * paso), direction);
+    }
+
+    // Modal Rápido Flotante
+    function abrirModal(prod) {
+      productoActual = prod;
+      document.getElementById('mName').innerText = prod.name;
+      document.getElementById('mImg').src = prod.images?.main || '';
+
+      const pNormal = prod.pricing?.normalPrice || 0;
+      const pOferta = prod.pricing?.offerPrice || 0;
+
+      if (pNormal && pOferta && pNormal > pOferta) {
+        document.getElementById('mPriceNormalRow').style.display = 'block';
+        document.getElementById('mPriceNormal').innerText = `S/ ${pNormal.toFixed(2)}`;
+        document.getElementById('mOfferLabel').style.display = 'block';
+        document.getElementById('mPriceOffer').innerText = `S/ ${pOferta.toFixed(2)}`;
+      } else {
+        document.getElementById('mPriceNormalRow').style.display = 'none';
+        document.getElementById('mOfferLabel').style.display = 'none';
+        document.getElementById('mPriceOffer').innerText = `S/ ${(pOferta || pNormal).toFixed(2)}`;
+      }
+
+      tonosDelProducto = [];
+      let nombreBase = prod.name.trim().toUpperCase().replace(/\.$/, '');
+
+      if (dbProductos.length > 0) {
+        tonosDelProducto = dbProductos.filter(p => {
+          let pNom = (p.nombre || '').trim().toUpperCase().replace(/\.$/, '');
+          return pNom === nombreBase && p.variante;
+        });
+      }
+
+      const track = document.getElementById('tonesTrack');
+      track.innerHTML = '';
+
+      if (tonosDelProducto.length > 0) {
+        document.getElementById('mVariantsSection').style.display = 'block';
+        tonoActual = tonosDelProducto[0];
+
+        tonosDelProducto.forEach((t, idx) => {
+          const item = document.createElement('div');
+          item.className = `tone-swatch-item ${idx === 0 ? 'selected' : ''}`;
+          
+          let swatchImg = t.imagen ? t.imagen.replace('/productos/', '/productos/bulk/').replace('.jpg', '_B.jpg') : '';
+          
+          item.innerHTML = `
+            <div class="tone-swatch-name">${t.variante}</div>
+            <div class="tone-swatch-color" style="background-image: url('${swatchImg}'), url('${t.imagen}'); background-color: #d4d4d8;"></div>
+            <div class="tone-swatch-code">Cód: ${t.cuv}</div>
+          `;
+
+          item.onclick = () => {
+            document.querySelectorAll('.tone-swatch-item').forEach(el => el.classList.remove('selected'));
+            item.classList.add('selected');
+            tonoActual = t;
+            if (t.imagen) document.getElementById('mImg').src = t.imagen;
+            if (t.precio_oferta || t.precio_normal) {
+              document.getElementById('mPriceOffer').innerText = `S/ ${(t.precio_oferta || t.precio_normal).toFixed(2)}`;
+            }
+          };
+          track.appendChild(item);
+        });
+      } else {
+        document.getElementById('mVariantsSection').style.display = 'none';
+        tonoActual = null;
+      }
+
+      document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function desplazarCarruselTonos(dir) {
+      document.getElementById('tonesTrack').scrollBy({ left: dir * 140, behavior: 'smooth' });
+    }
+
+    function cerrarModal(e) {
+      if (e.target.id === 'modalOverlay') cerrarModalDirecto();
+    }
+    function cerrarModalDirecto() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    function agregarAlCarritoDesdeModal() {
+      agregarProductoGenerico(1);
+      cerrarModalDirecto();
+      abrirModalExito();
+    }
+
+    function abrirModalExito() {
+      const prod = productoActual;
+      const cuvFinal = tonoActual ? tonoActual.cuv : prod.cuv;
+      const precioFinal = tonoActual?.precio_oferta || prod.pricing?.offerPrice || prod.pricing?.normalPrice || 0;
+      const imgFinal = tonoActual?.imagen || prod.images?.main || '';
+
+      document.getElementById('sImg').src = imgFinal;
+      document.getElementById('sName').innerText = prod.name;
+      document.getElementById('sTone').innerText = tonoActual ? `Tono ${tonoActual.variante} (Cód: ${cuvFinal})` : `Código: ${cuvFinal}`;
+      document.getElementById('sPrice').innerText = `S/ ${parseFloat(precioFinal).toFixed(2)}`;
+
+      document.getElementById('successModalOverlay').style.display = 'flex';
+    }
+
+    function cerrarModalExito() {
+      document.getElementById('successModalOverlay').style.display = 'none';
+    }
+
+    function revisarPedidoDesdeExito() {
+      cerrarModalExito();
+      abrirPantallaPedido();
+    }
+
+    // ========================================================
+    // DETECCIÓN DE PROMOCIÓN 1x 2x OFICIAL DE BELCORP
+    // ========================================================
+    function detectarPromo2x(prod) {
+      // 1. Si viene escala en el JSON de pricing
+      if (prod.pricing?.scalePricing) {
+        const scales = prod.pricing.scalePricing;
+        if (Array.isArray(scales) && scales.length > 0) {
+          const p2 = scales.find(s => s.quantity === 2);
+          if (p2) return { precio1: prod.pricing.offerPrice || prod.pricing.normalPrice, precio2x: p2.price };
+        }
+      }
+      // 2. Si el producto o la página tiene la promo registrada en texto o etiquetas oficiales
+      const txt = (prod.name + ' ' + (prod.description || '') + ' ' + (prod.pricing?.promotionText || '')).toUpperCase();
+      if (txt.includes('FOREVER LÍQUIDO') || txt.includes('1X2X') || txt.includes('1X 2X') || prod.has2xPromo) {
+        // En Forever Líquido de L'Bel la promo oficial es 1x 44.90 y 2x 59.90
+        const p1 = prod.pricing?.offerPrice || 44.90;
+        const p2 = 59.90;
+        return { precio1: p1, precio2x: p2 };
+      }
+      return null;
+    }
+
+    // Pantalla de Detalle Completa
+    function abrirPantallaDetalle() {
+      cerrarModalDirecto();
+
+      const prod = productoActual;
+      document.getElementById('dTitle').innerText = prod.name;
+      document.getElementById('dCuv').innerText = tonoActual ? tonoActual.cuv : prod.cuv;
+      document.getElementById('dSubdesc').innerText = prod.description || 'Producto original Belcorp.';
+      
+      const pNormal = prod.pricing?.normalPrice || 66.00;
+      const pOferta = tonoActual?.precio_oferta || prod.pricing?.offerPrice || prod.pricing?.normalPrice || 44.90;
+
+      if (pNormal && pNormal > pOferta) {
+        document.getElementById('dPriceNormalRow').style.display = 'block';
+        document.getElementById('dPriceNormal').innerText = `S/ ${pNormal.toFixed(2)}`;
+      } else {
+        document.getElementById('dPriceNormalRow').style.display = 'none';
+      }
+
+      // Revisar si aplica la promo oficial de 2X
+      const promo = detectarPromo2x(prod);
+      const badgeElem = document.getElementById('dPromoBadge');
+      const p1Elem = document.getElementById('dPrice1');
+      const p2Elem = document.getElementById('dPrice2');
+
+      if (promo) {
+        badgeElem.style.display = 'inline-block';
+        p1Elem.innerText = `1X S/ ${promo.precio1.toFixed(2)}`;
+        p2Elem.innerText = `2X S/ ${promo.precio2x.toFixed(2)}`;
+        p2Elem.style.display = 'block';
+      } else {
+        badgeElem.style.display = 'none';
+        p1Elem.innerText = `S/ ${parseFloat(pOferta).toFixed(2)}`;
+        p2Elem.style.display = 'none';
+      }
+
+      const imgPrincipal = tonoActual?.imagen || prod.images?.main || '';
+      document.getElementById('dBigImg').src = imgPrincipal;
+      document.getElementById('dThumbImg').src = imgPrincipal;
+
+      cantidadDetalle = 1;
+      document.getElementById('dQty').innerText = cantidadDetalle;
+
+      const grid = document.getElementById('dSwatchesGrid');
+      grid.innerHTML = '';
+
+      if (tonosDelProducto.length > 0) {
+        document.getElementById('dGridVariantsBox').style.display = 'block';
+        const tSel = tonoActual || tonosDelProducto[0];
+        document.getElementById('dCurrentToneName').innerText = `${tSel.variante} (CÓD: ${tSel.cuv})`;
+
+        tonosDelProducto.forEach((t, idx) => {
+          const sw = document.createElement('div');
+          const isSelected = (tonoActual && tonoActual.cuv === t.cuv) || (!tonoActual && idx === 0);
+          sw.className = `detail-grid-swatch ${isSelected ? 'selected' : ''}`;
+          
+          let swatchImg = t.imagen ? t.imagen.replace('/productos/', '/productos/bulk/').replace('.jpg', '_B.jpg') : '';
+          sw.style.backgroundImage = `url('${swatchImg}'), url('${t.imagen}')`;
+          sw.style.backgroundColor = '#d4d4d8';
+          sw.title = `${t.variante} - Cód: ${t.cuv}`;
+
+          sw.onclick = () => {
+            document.querySelectorAll('.detail-grid-swatch').forEach(el => el.classList.remove('selected'));
+            sw.classList.add('selected');
+            tonoActual = t;
+            document.getElementById('dCurrentToneName').innerText = `${t.variante} (CÓD: ${t.cuv})`;
+            document.getElementById('dCuv').innerText = t.cuv;
+            if (t.imagen) {
+              document.getElementById('dBigImg').src = t.imagen;
+              document.getElementById('dThumbImg').src = t.imagen;
+            }
+          };
+          grid.appendChild(sw);
+        });
+      } else {
+        document.getElementById('dGridVariantsBox').style.display = 'none';
+      }
+
+      document.getElementById('detailScreen').style.display = 'flex';
+    }
+
+    function cerrarPantallaDetalle() {
+      document.getElementById('detailScreen').style.display = 'none';
+    }
+
+    function alternarAcordeon(section) {
+      section.classList.toggle('open');
+    }
+
+    function ajustarCantidadDetalle(delta) {
+      cantidadDetalle += delta;
+      if (cantidadDetalle < 1) cantidadDetalle = 1;
+      document.getElementById('dQty').innerText = cantidadDetalle;
+    }
+
+    function agregarAlCarritoDesdeDetalle() {
+      agregarProductoGenerico(cantidadDetalle);
+      abrirModalExito();
+    }
+
+    function agregarProductoGenerico(cant) {
+      const prod = productoActual;
+      const cuvFinal = tonoActual ? tonoActual.cuv : prod.cuv;
+      const precioOferta = tonoActual?.precio_oferta || prod.pricing?.offerPrice || prod.pricing?.normalPrice || 44.90;
+      const precioNormal = prod.pricing?.normalPrice || 66.00;
+      const imgFinal = tonoActual?.imagen || prod.images?.main || '';
+
+      const promo = detectarPromo2x(prod);
+
+      const nuevoItem = {
+        id: Date.now(),
+        nombre: prod.name,
+        marca: marcaActual.toUpperCase(),
+        cuv: cuvFinal,
+        tono: tonoActual ? tonoActual.variante : null,
+        precio: parseFloat(precioOferta),
+        precioNormal: parseFloat(precioNormal),
+        promo2x: promo ? promo.precio2x : null,
+        cantidad: cant,
+        imagen: imgFinal
+      };
+
+      carrito.push(nuevoItem);
+      actualizarContadorCarrito();
+      actualizarDropdownHover();
+    }
+
+    function actualizarContadorCarrito() {
+      const total = carrito.reduce((acc, it) => acc + it.cantidad, 0);
+      document.getElementById('cartCount').innerText = total;
+      document.getElementById('cartCountDetail').innerText = total;
+    }
+
+    function actualizarDropdownHover() {
+      const list = document.getElementById('cartHoverList');
+      list.innerHTML = '';
+
+      if (carrito.length === 0) {
+        list.innerHTML = '<div style="font-size: 0.8rem; color:#71717a;">Tu bolsa está vacía.</div>';
+        document.getElementById('cartHoverTotal').innerText = 'S/ 0.00';
+        return;
+      }
+
+      let tot = 0;
+      carrito.forEach(it => {
+        let sub = 0;
+        if (it.promo2x && it.cantidad >= 2) {
+          const pares = Math.floor(it.cantidad / 2);
+          const sueltos = it.cantidad % 2;
+          sub = (pares * it.promo2x) + (sueltos * it.precio);
+        } else {
+          sub = it.precio * it.cantidad;
+        }
+        tot += sub;
+
+        const row = document.createElement('div');
+        row.className = 'cart-hover-item';
+        row.innerHTML = `
+          <img src="${it.imagen}" />
+          <div style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <strong>${it.nombre}</strong><br>
+            <span style="color:#71717a; font-size:0.7rem;">Cant: ${it.cantidad} ${it.tono ? `| ${it.tono}` : ''}</span>
+          </div>
+          <div style="font-weight:700;">S/ ${sub.toFixed(2)}</div>
+        `;
+        list.appendChild(row);
+      });
+
+      document.getElementById('cartHoverTotal').innerText = `S/ ${tot.toFixed(2)}`;
+    }
+
+    // ========================================================
+    // PANTALLA COMPLETA "MI PEDIDO" (CON PROMOCIÓN 2X APLICADA)
+    // ========================================================
+    function abrirPantallaPedido() {
+      renderizarPantallaPedido();
+      document.getElementById('orderScreen').style.display = 'flex';
+    }
+
+    function cerrarPantallaPedido() {
+      document.getElementById('orderScreen').style.display = 'none';
+    }
+
+    function renderizarPantallaPedido() {
+      const list = document.getElementById('orderItemsList');
+      list.innerHTML = '';
+
+      const totalItems = carrito.reduce((acc, it) => acc + it.cantidad, 0);
+      document.getElementById('orderCardTitle').innerText = `Tus productos (${totalItems})`;
+
+      if (carrito.length === 0) {
+        list.innerHTML = '<div style="color:#64748b; font-size:0.9rem;">No tienes productos agregados a tu pedido.</div>';
+        document.getElementById('sumRegular').innerText = 'S/ 0.00';
+        document.getElementById('sumDiscount').innerText = '- S/ 0.00';
+        document.getElementById('sumTotal').innerText = 'S/ 0.00';
+        validarFormulario();
+        return;
+      }
+
+      let totalRegular = 0;
+      let totalPagar = 0;
+
+      carrito.forEach((it, idx) => {
+        let subtotal = 0;
+        let esPromoAplicada = false;
+
+        // LÓGICA DE APLICACIÓN DE 1x 2x
+        if (it.promo2x && it.cantidad >= 2) {
+          const pares = Math.floor(it.cantidad / 2);
+          const sueltos = it.cantidad % 2;
+          subtotal = (pares * it.promo2x) + (sueltos * it.precio);
+          esPromoAplicada = true;
+        } else {
+          subtotal = it.precio * it.cantidad;
+        }
+
+        const subtotalRegular = it.precioNormal * it.cantidad;
+        totalRegular += subtotalRegular;
+        totalPagar += subtotal;
+
+        const row = document.createElement('div');
+        row.className = 'order-prod-row';
+        row.innerHTML = `
+          <img class="order-prod-img" src="${it.imagen}" />
+          <div class="order-prod-info">
+            <div class="order-prod-name">${it.nombre}</div>
+            <div class="order-prod-meta">
+              ${it.tono ? `<span class="order-meta-dot" style="background:#b91c1c;"></span> <span>${it.tono}</span>` : ''}
+              <span>${it.marca} - ${it.cuv}</span>
+            </div>
+            ${esPromoAplicada ? `<span class="order-promo-applied-badge">1x2x aplicado</span>` : ''}
+          </div>
+          <div class="order-qty-control">
+            <button class="order-qty-btn" onclick="modificarCantidadPedido(${idx}, -1)">-</button>
+            <span class="order-qty-val">${it.cantidad}</span>
+            <button class="order-qty-btn" onclick="modificarCantidadPedido(${idx}, 1)">+</button>
+          </div>
+          <button class="order-trash-btn" onclick="eliminarDelPedido(${idx})" title="Eliminar"><i class="fa-regular fa-trash-can"></i></button>
+          <div class="order-prod-pricing">
+            <span class="order-p-normal">S/ ${subtotalRegular.toFixed(2)}</span>
+            <span class="order-p-offer">S/ ${subtotal.toFixed(2)}</span>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+
+      const descuento = Math.max(0, totalRegular - totalPagar);
+      document.getElementById('sumRegular').innerText = `S/ ${totalRegular.toFixed(2)}`;
+      document.getElementById('sumDiscount').innerText = `- S/ ${descuento.toFixed(2)}`;
+      document.getElementById('sumTotal').innerText = `S/ ${totalPagar.toFixed(2)}`;
+
+      validarFormulario();
+    }
+
+    function modificarCantidadPedido(idx, delta) {
+      carrito[idx].cantidad += delta;
+      if (carrito[idx].cantidad < 1) {
+        eliminarDelPedido(idx);
+        return;
+      }
+      actualizarContadorCarrito();
+      actualizarDropdownHover();
+      renderizarPantallaPedido();
+    }
+
+    function eliminarDelPedido(idx) {
+      carrito.splice(idx, 1);
+      actualizarContadorCarrito();
+      actualizarDropdownHover();
+      renderizarPantallaPedido();
+    }
+
+    function validarFormulario() {
+      const email = document.getElementById('custEmail').value.trim();
+      const name = document.getElementById('custName').value.trim();
+      const last = document.getElementById('custLastName').value.trim();
+      const terms = document.getElementById('custTerms').checked;
+      const btn = document.getElementById('btnSendWs');
+
+      const emailValido = email.includes('@') && email.includes('.');
+      if (emailValido && name.length > 1 && last.length > 1 && terms && carrito.length > 0) {
+        btn.classList.add('active');
+        btn.disabled = false;
+      } else {
+        btn.classList.remove('active');
+        btn.disabled = true;
+      }
+    }
+
+    function enviarPedidoFinalWhatsApp() {
+      const email = document.getElementById('custEmail').value.trim();
+      const name = document.getElementById('custName').value.trim();
+      const last = document.getElementById('custLastName').value.trim();
+
+      const tel = "51999999999"; // Cambia por tu número de WhatsApp
+      let mensaje = `¡Hola *LIZDY & CO. SHOP*! Deseo enviar mi pedido del catálogo:\n\n`;
+      mensaje += `*DATOS DEL CLIENTE:*\n`;
+      mensaje += `• Nombre: ${name} ${last}\n`;
+      mensaje += `• Correo: ${email}\n\n`;
+      mensaje += `*DETALLE DE PRODUCTOS:*\n`;
+
+      let total = 0;
+      carrito.forEach((it, i) => {
+        let sub = 0;
+        let promoTxt = '';
+        if (it.promo2x && it.cantidad >= 2) {
+          const pares = Math.floor(it.cantidad / 2);
+          const sueltos = it.cantidad % 2;
+          sub = (pares * it.promo2x) + (sueltos * it.precio);
+          promoTxt = ' [Promo 1x2x aplicada]';
+        } else {
+          sub = it.precio * it.cantidad;
+        }
+        total += sub;
+
+        const tonoStr = it.tono ? ` (Tono: ${it.tono})` : '';
+        mensaje += `${i + 1}. ${it.nombre}${tonoStr}${promoTxt}\n   Cód: ${it.cuv} | Cant: ${it.cantidad} | S/ ${sub.toFixed(2)}\n`;
+      });
+
+      mensaje += `\n*TOTAL ESTIMADO: S/ ${total.toFixed(2)}*`;
+
+      window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+
+    // Buscador
+    function abrirBuscador() {
+      document.getElementById('searchOverlay').style.display = 'flex';
+      document.getElementById('searchInput').focus();
+    }
+    function cerrarBuscador(e) {
+      if (e.target.id === 'searchOverlay') cerrarBuscadorDirecto();
+    }
+    function cerrarBuscadorDirecto() {
+      document.getElementById('searchOverlay').style.display = 'none';
+    }
+
+    function ejecutarBusqueda() {
+      const q = document.getElementById('searchInput').value.trim().toUpperCase();
+      const resContainer = document.getElementById('searchResults');
+      resContainer.innerHTML = '';
+
+      if (q.length < 2) return;
+
+      const filtrados = dbProductos.filter(p => 
+        (p.marca || '').toUpperCase() === marcaActual.toUpperCase() &&
+        ((p.nombre || '').toUpperCase().includes(q) || (p.cuv || '').includes(q))
+      ).slice(0, 10);
+
+      filtrados.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'search-res-item';
+        item.innerHTML = `
+          <div>
+            <strong>${p.nombre}</strong> ${p.variante ? `(${p.variante})` : ''}<br>
+            <span style="color:#a1a1aa; font-size:0.75rem;">CUV: ${p.cuv} | Pág. ${p.pagina || '-'}</span>
+          </div>
+          <span style="color:#e11d48; font-weight:bold;">S/ ${p.precio_oferta || p.precio_normal}</span>
+        `;
+        item.onclick = () => {
+          cerrarBuscadorDirecto();
+          if (p.pagina) {
+            const targetIndex = pagesData.findIndex(pg => pg.order === p.pagina);
+            if (targetIndex !== -1) renderPage(targetIndex, 1);
+          }
+        };
+        resContainer.appendChild(item);
+      });
+    }
+
+    function alternarPantallaCompleta() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      renderPage(currentIndex, 0);
+    });
+
+    // Iniciar
+    precargarPortadas();
+    cambiarMarca('cyzone');
+  </script>
+</body>
+</html>
