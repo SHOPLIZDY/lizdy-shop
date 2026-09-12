@@ -167,7 +167,7 @@
       flex: 1; display: flex; width: 100%; height: calc(100vh - 60px - 46px); overflow: hidden; position: relative;
     }
 
-    /* Barra Lateral Izquierda Optimizada para Móvil y PC */
+    /* Barra Lateral Izquierda */
     .brand-sidebar {
       width: 106px; background: var(--bg-sidebar); border-right: 1px solid var(--border-dark);
       display: flex; flex-direction: column; align-items: center; padding: 12px 6px;
@@ -205,7 +205,7 @@
     }
     .brand-cover-card.active .cover-label { color: #fff; font-weight: 900; }
 
-    /* Escenario del Visor con Fondo Personalizado y Margen de 0.75cm */
+    /* Escenario del Visor con Margen de 0.75cm para PC */
     .book-stage {
       flex: 1; height: 100%; position: relative; display: flex;
       justify-content: center; align-items: center; overflow: hidden;
@@ -216,16 +216,17 @@
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(12, 12, 14, 0.65);
+      background: rgba(12, 12, 14, 0.55);
       z-index: 1;
     }
 
+    /* Contenedor con zoom habilitado para celulares */
     .page-stage-box {
       position: relative; width: 100%; height: 100%;
       display: flex; justify-content: center; align-items: center;
       transition: transform 0.26s ease-out, opacity 0.26s ease-out;
       z-index: 5;
-      overflow: auto; /* Permite zoom/lupa manual en celulares */
+      overflow: auto; 
       -webkit-overflow-scrolling: touch;
     }
 
@@ -237,9 +238,10 @@
       display: flex; align-items: center; justify-content: center;
       overflow: visible;
     }
-    /* AQUÍ SE MODIFICÓ: object-fit: contain para celulares y pantallas pequeñas para que no se recorte */
+    
+    /* IMAGEN: Usamos 'contain' para que jamás se deforme, pero ocupe el máximo espacio */
     .page-sheet img {
-      max-width: 100%; max-height: 100%; object-fit: contain; display: block; pointer-events: none;
+      width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;
       border-radius: 4px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.7);
     }
@@ -313,6 +315,38 @@
     }
     .mini-nav-btn:hover:not(:disabled) { background: #3f3f46; }
     .mini-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+    /* ========================================================
+        ADAPTACIÓN PARA CELULARES (RESPONSIVE DESIGN)
+       ======================================================== */
+    @media (max-width: 768px) {
+      .main-workspace {
+        flex-direction: column; /* Apila los elementos verticalmente */
+      }
+      .brand-sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row; /* Barra de marcas horizontal */
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-dark);
+        justify-content: center; /* Centra las marcas */
+        gap: 20px;
+      }
+      .brand-cover-card { width: auto; }
+      .cover-thumb-wrapper { width: 55px; height: 75px; } /* Portadas más pequeñas para que quepan arriba */
+      .sidebar-title { display: none; } /* Oculta la palabra "Marcas" para ahorrar espacio */
+      
+      .book-stage {
+        padding: 10px; /* Borde más pequeño en celular para no desperdiciar pantalla */
+      }
+      .flip-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
+      .flip-arrow.left { left: 10px; }
+      .flip-arrow.right { right: 10px; }
+      
+      /* Ajuste del nombre del logo superior en móviles muy pequeños */
+      .brand-logo-text { font-size: 1rem; }
+    }
 
     /* ========================================================
         MODAL 1: FLOTANTE RÁPIDO
@@ -706,7 +740,7 @@
     </div>
   </div>
 
-  <!-- Zona Principal: Portadas a la Izquierda + Visor al Centro con Margen de 0.75cm y zoom disponible -->
+  <!-- Zona Principal -->
   <div class="main-workspace">
     
     <div class="brand-sidebar">
@@ -756,9 +790,7 @@
     </div>
   </div>
 
-  <!-- ========================================================
-      MODAL 1: FLOTANTE RÁPIDO
-      ======================================================== -->
+  <!-- MODAL 1: FLOTANTE RÁPIDO -->
   <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
     <div class="modal-card">
       <button class="modal-close" onclick="cerrarModalDirecto()">✕</button>
@@ -789,9 +821,7 @@
     </div>
   </div>
 
-  <!-- ========================================================
-      MODAL 2: ¡AGREGADO CON ÉXITO!
-      ======================================================== -->
+  <!-- MODAL 2: ¡AGREGADO CON ÉXITO! -->
   <div class="success-modal-overlay" id="successModalOverlay">
     <div class="success-card">
       <div class="success-header-row">
@@ -818,9 +848,7 @@
     </div>
   </div>
 
-  <!-- ========================================================
-      PANTALLA DE DETALLE COMPLETA
-      ======================================================== -->
+  <!-- PANTALLA DE DETALLE COMPLETA -->
   <div class="detail-view-screen" id="detailScreen">
     <div class="detail-top-nav">
       <button class="detail-back-btn" onclick="cerrarPantallaDetalle()">
@@ -909,9 +937,7 @@
     </div>
   </div>
 
-  <!-- ========================================================
-      PANTALLA COMPLETA 3: "MI PEDIDO" (CON AGRADECIMIENTO Y TIKTOK)
-      ======================================================== -->
+  <!-- PANTALLA COMPLETA 3: "MI PEDIDO" -->
   <div class="order-view-screen" id="orderScreen">
     <div class="order-top-nav">
       <button class="order-back-btn" onclick="cerrarPantallaPedido()">
@@ -1554,7 +1580,7 @@
         return;
       }
 
-      const tel = "51916413965"; // Cambia por tu número de WhatsApp
+      const tel = "51999999999"; // Cambia por tu número de WhatsApp
       let mensaje = `¡Hola *LIZDY & CO. SHOP*! Deseo enviar mi pedido del catálogo:\n\n`;
       mensaje += `*DETALLE DE PRODUCTOS:*\n`;
 
@@ -1596,7 +1622,7 @@
     function ejecutarBusqueda() {
       const q = document.getElementById('searchInput').value.trim().toUpperCase();
       const resContainer = document.getElementById('searchResults');
-      resContainer.innerHTML = '';
+      resContainer.innerHTML = ``;
 
       if (q.length < 2) return;
 
@@ -1643,4 +1669,4 @@
     cambiarMarca('cyzone');
   </script>
 </body>
-</html>
+</html>este codigo esat bien o que le falta
