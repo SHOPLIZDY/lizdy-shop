@@ -103,7 +103,7 @@
     /* Barra Superior */
     .top-header {
       width: 100%; height: 60px; background: #09090b; display: flex; justify-content: space-between;
-      align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border-dark); z-index: 50; flex-shrink: 0;
+      align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border-dark); z-index: 60; flex-shrink: 0;
     }
     .brand-logo-container {
       display: flex;
@@ -162,12 +162,12 @@
     .cart-hover-item img { width: 34px; height: 34px; object-fit: contain; }
     .cart-hover-total { font-weight: 800; font-size: 0.88rem; display: flex; justify-content: space-between; margin-top: 4px; }
 
-    /* Área Central */
+    /* Área Central Base (Desktop) */
     .main-workspace {
       flex: 1; display: flex; width: 100%; height: calc(100vh - 60px - 46px); overflow: hidden; position: relative;
     }
 
-    /* Barra Lateral Izquierda */
+    /* Barra Lateral Izquierda (Desktop) */
     .brand-sidebar {
       width: 106px; background: var(--bg-sidebar); border-right: 1px solid var(--border-dark);
       display: flex; flex-direction: column; align-items: center; padding: 12px 6px;
@@ -205,7 +205,7 @@
     }
     .brand-cover-card.active .cover-label { color: #fff; font-weight: 900; }
 
-    /* Escenario del Visor con Margen de 0.75cm para PC */
+    /* Escenario del Visor (Desktop) */
     .book-stage {
       flex: 1; height: 100%; position: relative; display: flex;
       justify-content: center; align-items: center; overflow: hidden;
@@ -216,18 +216,15 @@
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(12, 12, 14, 0.55);
+      background: rgba(12, 12, 14, 0.65);
       z-index: 1;
     }
 
-    /* Contenedor con zoom habilitado para celulares */
     .page-stage-box {
       position: relative; width: 100%; height: 100%;
       display: flex; justify-content: center; align-items: center;
       transition: transform 0.26s ease-out, opacity 0.26s ease-out;
       z-index: 5;
-      overflow: auto; 
-      -webkit-overflow-scrolling: touch;
     }
 
     .page-stage-box.slide-left { transform: translateX(-50px); opacity: 0; }
@@ -238,10 +235,8 @@
       display: flex; align-items: center; justify-content: center;
       overflow: visible;
     }
-    
-    /* IMAGEN: Usamos 'contain' para que jamás se deforme, pero ocupe el máximo espacio */
     .page-sheet img {
-      width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;
+      max-width: 100%; max-height: 100%; object-fit: contain; display: block; pointer-events: none;
       border-radius: 4px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.7);
     }
@@ -296,7 +291,7 @@
       50% { box-shadow: 0 4px 18px rgba(255, 255, 255, 0.45); }
     }
 
-    /* Barra Inferior */
+    /* Barra Inferior (Solo visible en Desktop) */
     .bottom-bar {
       width: 100%; height: 46px; background: #09090b; border-top: 1px solid var(--border-dark);
       display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 40; flex-shrink: 0;
@@ -317,39 +312,82 @@
     .mini-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
 
     /* ========================================================
-        ADAPTACIÓN PARA CELULARES (RESPONSIVE DESIGN)
+       ✨ MODO MÓVIL (SCROLL VERTICAL ESTILO APP OFICIAL) ✨
        ======================================================== */
     @media (max-width: 768px) {
+      .top-header { position: sticky; top: 0; z-index: 60; }
+      .brand-logo-text { font-size: 1.05rem; }
+      
       .main-workspace {
-        flex-direction: column; /* Apila los elementos verticalmente */
+        flex-direction: column;
+        height: calc(100vh - 60px); /* Ocupa hasta el borde inferior porque no hay barra de abajo */
+        overflow-y: auto; /* Permite scroll vertical */
+        overflow-x: hidden;
+        /* El fondo ahora se ancla al contenedor desplazable */
+        background: #101013 url('https://raw.githubusercontent.com/SHOPLIZDY/lizdy-shop/main/LOGO%20FONDO.png') center/cover no-repeat fixed;
       }
+      .main-workspace::before {
+        content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(12, 12, 14, 0.70); z-index: 0; pointer-events: none;
+      }
+
+      /* Barra de marcas: Sticky y Difuminada (Blur) */
       .brand-sidebar {
         width: 100%;
         height: auto;
-        flex-direction: row; /* Barra de marcas horizontal */
-        padding: 10px;
+        flex-direction: row;
+        padding: 12px 10px;
         border-right: none;
-        border-bottom: 1px solid var(--border-dark);
-        justify-content: center; /* Centra las marcas */
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        justify-content: center;
         gap: 20px;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(20, 20, 23, 0.65);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
       }
-      .brand-cover-card { width: auto; }
-      .cover-thumb-wrapper { width: 55px; height: 75px; } /* Portadas más pequeñas para que quepan arriba */
-      .sidebar-title { display: none; } /* Oculta la palabra "Marcas" para ahorrar espacio */
-      
+      .cover-thumb-wrapper { width: 62px; height: 86px; }
+      .sidebar-title { display: none; }
+
       .book-stage {
-        padding: 10px; /* Borde más pequeño en celular para no desperdiciar pantalla */
+        height: auto;
+        background: none;
+        padding: 10px; /* Borde más pequeño de ~10px en celular para ver el fondo sin gastar mucha pantalla */
+        overflow: visible;
+        display: block; 
       }
-      .flip-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
-      .flip-arrow.left { left: 10px; }
-      .flip-arrow.right { right: 10px; }
-      
-      /* Ajuste del nombre del logo superior en móviles muy pequeños */
-      .brand-logo-text { font-size: 1rem; }
+      .book-stage::before { display: none; }
+
+      /* Ajustes para el Scroll Vertical de las Hojas */
+      .mobile-scroll-view {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Espacio entre cada página del catálogo */
+        width: 100%;
+        height: auto;
+      }
+
+      .mobile-page-wrapper {
+        position: relative;
+        width: 100%;
+        border-radius: 6px;
+        background: transparent;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      }
+
+      .mobile-page-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain; /* Evita que se deformen */
+        border-radius: 6px;
+      }
     }
 
     /* ========================================================
-        MODAL 1: FLOTANTE RÁPIDO
+        MODALES Y DEMÁS...
         ======================================================== */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -381,7 +419,6 @@
     .modal-offer-tag { font-size: 0.75rem; color: #52525b; font-weight: 600; margin-top: 6px; }
     .modal-price-offer { font-size: 1.35rem; font-weight: 900; color: #000; margin-bottom: 14px; }
 
-    /* Carrusel de Tonos con CUV visible */
     .tones-carousel-wrap {
       display: flex; align-items: center; gap: 8px; margin-bottom: 18px; position: relative;
     }
@@ -429,9 +466,6 @@
     }
     .btn-action-outline:hover { background: #f5f3ff; }
 
-    /* ========================================================
-        MODAL 2: ¡AGREGADO CON ÉXITO!
-        ======================================================== */
     .success-modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.65); display: none; justify-content: center; align-items: center;
@@ -475,9 +509,6 @@
     }
     .btn-review-order:hover { background: #ddd6fe; }
 
-    /* ========================================================
-        PANTALLA DE DETALLE COMPLETA
-        ======================================================== */
     .detail-view-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #ffffff; color: #18181b; z-index: 200; display: none;
@@ -514,7 +545,6 @@
     }
     .detail-big-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
     
-    /* Insignia Roja 1x 2x */
     .promo-badge-tag {
       position: absolute; top: 10px; right: 10px; background: #dc2626; color: #fff;
       font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 14px;
@@ -568,9 +598,6 @@
     .accordion-section.open .accordion-body { display: block; }
     .accordion-section.open .accordion-header i { transform: rotate(180deg); }
 
-    /* ========================================================
-        PANTALLA COMPLETA 3: "MI PEDIDO" (CON AGRADECIMIENTO Y TIKTOK)
-        ======================================================== */
     .order-view-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #f8fafc; color: #18181b; z-index: 210; display: none;
@@ -614,7 +641,6 @@
     }
     .order-meta-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
-    /* Insignia 1x2x aplicado */
     .order-promo-applied-badge {
       display: inline-block; border: 1px solid #f87171; color: #ef4444; font-size: 0.68rem;
       font-weight: 800; padding: 1px 8px; border-radius: 10px; margin-top: 4px;
@@ -646,7 +672,6 @@
       padding-top: 12px; margin-top: 6px; margin-bottom: 0;
     }
 
-    /* Caja de Agradecimiento, TikTok y WhatsApp */
     .thankyou-box { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 22px; text-align: center; }
     .thankyou-title { font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
     .thankyou-text { font-size: 0.85rem; color: #64748b; margin-bottom: 16px; line-height: 1.4; }
@@ -667,7 +692,6 @@
     }
     .btn-send-whatsapp:hover { background: #20ba5a; }
 
-    /* Modal de Búsqueda */
     .search-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: flex-start;
@@ -692,7 +716,7 @@
 </head>
 <body>
 
-  <!-- MODAL DE ADVERTENCIA / FECHA LÍMITE (HASTA EL 7 DE OCTUBRE) -->
+  <!-- MODAL DE ADVERTENCIA / FECHA LÍMITE -->
   <div id="deadline-modal">
     <div class="modal-content-deadline">
       <i class="fa-solid fa-triangle-exclamation"></i>
@@ -740,9 +764,10 @@
     </div>
   </div>
 
-  <!-- Zona Principal -->
-  <div class="main-workspace">
+  <!-- Zona Principal: En Móvil tendrá scroll vertical infinito -->
+  <div class="main-workspace" id="mainWorkspace">
     
+    <!-- En celular esta barra será Sticky y Difuminada -->
     <div class="brand-sidebar">
       <div class="sidebar-title">Marcas</div>
 
@@ -763,8 +788,10 @@
     </div>
 
     <div class="book-stage" id="bookStage">
+      <!-- Botones para PC -->
       <button class="flip-arrow left" id="btnPrev" onclick="cambiarPagina(-1)"><i class="fa-solid fa-chevron-left"></i></button>
 
+      <!-- Contenedor que cambia su estructura según si es PC o Móvil -->
       <div class="page-stage-box" id="pageStageBox">
         <div class="page-sheet">
           <img id="pageImg" src="" alt="Página de catálogo" />
@@ -772,13 +799,14 @@
         </div>
       </div>
 
+      <!-- Botones para PC -->
       <button class="flip-arrow right" id="btnNext" onclick="cambiarPagina(1)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
   </div>
 
-  <!-- Barra Inferior Limpia -->
-  <div class="bottom-bar">
+  <!-- Barra Inferior Limpia (Se oculta en móvil) -->
+  <div class="bottom-bar" id="bottomBar">
     <div class="page-counter-box">
       <span class="brand-current-tag" id="brandCurrentTag">CYZONE</span>
       <span id="pageIndicator">Cargando...</span>
@@ -790,7 +818,7 @@
     </div>
   </div>
 
-  <!-- MODAL 1: FLOTANTE RÁPIDO -->
+  <!-- ======================== MODALES RESTANTES ======================== -->
   <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
     <div class="modal-card">
       <button class="modal-close" onclick="cerrarModalDirecto()">✕</button>
@@ -821,7 +849,6 @@
     </div>
   </div>
 
-  <!-- MODAL 2: ¡AGREGADO CON ÉXITO! -->
   <div class="success-modal-overlay" id="successModalOverlay">
     <div class="success-card">
       <div class="success-header-row">
@@ -848,7 +875,6 @@
     </div>
   </div>
 
-  <!-- PANTALLA DE DETALLE COMPLETA -->
   <div class="detail-view-screen" id="detailScreen">
     <div class="detail-top-nav">
       <button class="detail-back-btn" onclick="cerrarPantallaDetalle()">
@@ -937,7 +963,6 @@
     </div>
   </div>
 
-  <!-- PANTALLA COMPLETA 3: "MI PEDIDO" -->
   <div class="order-view-screen" id="orderScreen">
     <div class="order-top-nav">
       <button class="order-back-btn" onclick="cerrarPantallaPedido()">
@@ -987,7 +1012,6 @@
     </div>
   </div>
 
-  <!-- Modal de Búsqueda -->
   <div class="search-overlay" id="searchOverlay" onclick="cerrarBuscador(event)">
     <div class="search-card">
       <div class="search-input-box">
@@ -1015,7 +1039,6 @@
     let cantidadDetalle = 1;
     let carrito = [];
 
-    // LÓGICA DEL MODAL DE FECHA LÍMITE (7 DE OCTUBRE)
     function aceptarAcceso() {
         document.getElementById('deadline-modal').style.display = 'none';
     }
@@ -1065,7 +1088,7 @@
           const raw = Array.isArray(data) ? data[0] : data;
           pagesData = raw?.data?.catalog?.pages || [];
           if (pagesData.length > 0) {
-            renderPage(0, 0);
+            renderPage(0, 0); // Renderiza PC o Móvil dependiendo del tamaño
           } else {
             document.getElementById('pageIndicator').innerText = "Catálogo vacío";
           }
@@ -1102,14 +1125,79 @@
       if (index < 0) index = 0;
       if (index >= pagesData.length) index = pagesData.length - 1;
 
-      const vistaDoble = window.innerWidth >= 768;
+      const isMobile = window.innerWidth <= 768;
+      const stageBox = document.getElementById('pageStageBox');
+
+      // =======================================================
+      // LOGICA PARA MÓVILES: Lista vertical infinita (Scroll)
+      // =======================================================
+      if (isMobile) {
+        document.getElementById('btnPrev').style.display = 'none';
+        document.getElementById('btnNext').style.display = 'none';
+        document.getElementById('bottomBar').style.display = 'none';
+
+        stageBox.classList.add('mobile-scroll-view');
+        stageBox.classList.remove('slide-left', 'slide-right', 'double-view');
+        
+        // Limpiamos la estructura de PC
+        stageBox.innerHTML = ''; 
+
+        // Creamos y cargamos TODAS las hojas en una lista hacia abajo
+        pagesData.forEach(page => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mobile-page-wrapper';
+          
+          const img = document.createElement('img');
+          // Lazy loading para que cargue ultra rápido en celular
+          img.setAttribute('loading', 'lazy');
+          img.src = page.images?.single || page.images?.main || page.images?.double || '';
+          
+          wrapper.appendChild(img);
+
+          // Agregar hotspots directo encima de la hoja
+          (page.products || []).forEach(prod => {
+            if (prod.position_x !== undefined && prod.position_y !== undefined) {
+              let posX = Math.max(3, Math.min(prod.position_x, 97));
+              let posY = Math.max(3, Math.min(prod.position_y, 97));
+              wrapper.appendChild(crearBotonHotspot(prod, posX, posY));
+            }
+          });
+
+          stageBox.appendChild(wrapper);
+        });
+
+        // Al cambiar de marca, regresamos el scroll al principio
+        if(delta === 0) {
+           document.getElementById('mainWorkspace').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return; 
+      }
+
+      // =======================================================
+      // LÓGICA PARA COMPUTADORA (PC): Carrusel con flechas
+      // =======================================================
+      document.getElementById('btnPrev').style.display = 'flex';
+      document.getElementById('btnNext').style.display = 'flex';
+      document.getElementById('bottomBar').style.display = 'flex';
+      
+      stageBox.classList.remove('mobile-scroll-view');
+
+      // Restaurar estructura original de PC si venimos de celular
+      if (!document.getElementById('pageImg')) {
+        stageBox.innerHTML = `
+          <div class="page-sheet">
+            <img id="pageImg" src="" alt="Página de catálogo" />
+            <div id="hotspotContainer"></div>
+          </div>
+        `;
+      }
+
+      const vistaDoble = window.innerWidth > 768; // Ya sabemos que es true aquí, pero mantenemos la lógica
       if (vistaDoble && index > 0 && index % 2 === 0) {
         index = index - 1;
       }
       currentIndex = index;
 
-      const stageBox = document.getElementById('pageStageBox');
-      const page = pagesData[currentIndex];
       const imgElem = document.getElementById('pageImg');
       const container = document.getElementById('hotspotContainer');
 
@@ -1122,9 +1210,9 @@
 
         if (vistaDoble && currentIndex > 0) {
           stageBox.classList.add('double-view');
-          imgElem.src = page.images?.double || page.images?.single || '';
+          imgElem.src = pagesData[currentIndex].images?.double || pagesData[currentIndex].images?.single || '';
 
-          (page.products || []).forEach(prod => {
+          (pagesData[currentIndex].products || []).forEach(prod => {
             if (prod.position_x !== undefined && prod.position_y !== undefined) {
               let posX = prod.position_x / 2;
               posX = Math.max(4, Math.min(posX, 46));
@@ -1143,16 +1231,16 @@
                 container.appendChild(crearBotonHotspot(prod, posX, posY));
               }
             });
-            document.getElementById('pageIndicator').innerText = `Págs. ${page.order}-${nextPage.order} de ${pagesData.length}`;
+            document.getElementById('pageIndicator').innerText = `Págs. ${pagesData[currentIndex].order}-${nextPage.order} de ${pagesData.length}`;
           } else {
-            document.getElementById('pageIndicator').innerText = `Pág. ${page.order} de ${pagesData.length}`;
+            document.getElementById('pageIndicator').innerText = `Pág. ${pagesData[currentIndex].order} de ${pagesData.length}`;
           }
 
         } else {
           stageBox.classList.remove('double-view');
-          imgElem.src = page.images?.single || page.images?.main || page.images?.double || '';
+          imgElem.src = pagesData[currentIndex].images?.single || pagesData[currentIndex].images?.main || pagesData[currentIndex].images?.double || '';
 
-          (page.products || []).forEach(prod => {
+          (pagesData[currentIndex].products || []).forEach(prod => {
             if (prod.position_x !== undefined && prod.position_y !== undefined) {
               let posX = Math.max(6, Math.min(prod.position_x, 94));
               let posY = Math.max(5, Math.min(prod.position_y, 94));
@@ -1160,7 +1248,7 @@
             }
           });
 
-          document.getElementById('pageIndicator').innerText = `Pág. ${page.order} de ${pagesData.length}`;
+          document.getElementById('pageIndicator').innerText = `Pág. ${pagesData[currentIndex].order} de ${pagesData.length}`;
         }
 
         const disablePrev = (currentIndex === 0);
@@ -1181,7 +1269,6 @@
       renderPage(currentIndex + (direction * paso), direction);
     }
 
-    // Modal Rápido Flotante
     function abrirModal(prod) {
       productoActual = prod;
       document.getElementById('mName').innerText = prod.name;
@@ -1289,9 +1376,6 @@
       abrirPantallaPedido();
     }
 
-    // ========================================================
-    // DETECCIÓN DE PROMOCIÓN 1x 2x OFICIAL DE BELCORP
-    // ========================================================
     function detectarPromo2x(prod) {
       if (prod.pricing?.scalePricing) {
         const scales = prod.pricing.scalePricing;
@@ -1309,7 +1393,6 @@
       return null;
     }
 
-    // Pantalla de Detalle Completa
     function abrirPantallaDetalle() {
       cerrarModalDirecto();
 
@@ -1479,7 +1562,6 @@
       document.getElementById('cartHoverTotal').innerText = `S/ ${tot.toFixed(2)}`;
     }
 
-    // Pantalla "Mi Pedido"
     function abrirPantallaPedido() {
       renderizarPantallaPedido();
       document.getElementById('orderScreen').style.display = 'flex';
@@ -1607,7 +1689,6 @@
       window.open(`https://wa.me/${tel}?text=${encodeURIComponent(mensaje)}`, '_blank');
     }
 
-    // Buscador
     function abrirBuscador() {
       document.getElementById('searchOverlay').style.display = 'flex';
       document.getElementById('searchInput').focus();
@@ -1661,6 +1742,7 @@
     }
 
     window.addEventListener('resize', () => {
+      // Re-renderizar si la pantalla cambia de tamaño (por si giran el celular)
       renderPage(currentIndex, 0);
     });
 
@@ -1669,4 +1751,4 @@
     cambiarMarca('cyzone');
   </script>
 </body>
-</html>este codigo esat bien o que le falta
+</html>
